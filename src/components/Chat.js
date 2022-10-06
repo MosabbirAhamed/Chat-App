@@ -9,16 +9,23 @@ const Chat = ({ user }) => {
     const [messages, setMessages] = useState([])
     const endOfMessage = useRef(null)
 
+
     const scrollToBottom = () => {
         if (!endOfMessage.current) return
         endOfMessage.current.scrollIntoView({ behavior: 'smooth' })
+    }
+
+    const searchInput = useRef(null);
+
+    function handleFocus() {
+        searchInput.current.focus()
     }
 
 
     useEffect(() => {
         const unsub = db.collection("chats")
             .orderBy("timestamp", "desc")
-            .limit(15)
+            .limit(20)
             .onSnapshot(snapshot => {
                 setMessages(
                     snapshot.docs.map(doc => ({
@@ -27,6 +34,8 @@ const Chat = ({ user }) => {
                     }))
                 );
                 scrollToBottom()
+                handleFocus()
+
             })
         return () => {
             unsub()
@@ -66,6 +75,7 @@ const Chat = ({ user }) => {
         }
         db.collection("chats").add(data)
         setMessage("")
+
     }
 
     return (
@@ -77,21 +87,23 @@ const Chat = ({ user }) => {
 
 
             <div className="h-16  bg-fuchsia-300 bg-opacity-20 pt-3">
-                <div className="flex justify-between items-center">
+                <form className="flex justify-between items-center">
                     <input
                         type="text"
                         className=" bg-gray-50 appearance-none border border-gray-400 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                         value={message}
                         onChange={e => setMessage(e.target.value)}
                         placeholder="Type a Message"
+                        ref={searchInput}
                     />
                     <button
                         onClick={sendMessage}
+                        type="submit"
                         className="ml-3 flex items-center justify-between text-indigo-700 p-2  text-2xl rounded-md bg-indigo-600 hover:bg-indigo-700  bg-opacity-10 hover:bg-opacity-20"
                     >
                         <RiSendPlaneFill />
                     </button>
-                </div>
+                </form>
             </div>
         </div>
     )
