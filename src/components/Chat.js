@@ -34,7 +34,7 @@ const Chat = ({ user }) => {
                     }))
                 );
                 scrollToBottom()
-                handleFocus()
+
 
             })
         return () => {
@@ -75,11 +75,12 @@ const Chat = ({ user }) => {
         }
         db.collection("chats").add(data)
         setMessage("")
+        handleFocus()
 
     }
 
     return (
-        <div className="h-[85vh]  bg-gray-100 flex-grow rounded-md flex flex-col">
+        <div className="md:h-[85vh] h-[80vh] bg-gray-100 flex-grow rounded-md flex flex-col">
             <div className="flex-grow flex flex-col-reverse overflow-y-auto max-h-full p-2">
                 <div ref={endOfMessage}></div>
                 {messages?.map(chat => recderChat(chat))}
