@@ -63,7 +63,7 @@ const Chat = ({ user }) => {
         const byMe = chat?.email === user?.email
         if (byMe) return (
             <div key={chat?.id} className={` bg-[#c2f2d0] text-black max-w-[80%] w-fit rounded p-2 mb-2 self-end`}>
-                {chat?.attachment && <img className="w-full rounded-md" src={chat?.attachment} alt="image" />}
+                {chat?.attachment && <img className="w-full rounded-md" src={chat?.attachment} alt={chat?.name} />}
                 <p className="text-right pt-1 text-[#292929]">{chat?.text}</p>
 
             </div>
@@ -79,7 +79,7 @@ const Chat = ({ user }) => {
                         <div className="text-indigo-600 font-semibold text-sm text-left mt-1">{chat.name}</div>
                     )}
 
-                    {chat?.attachment && <img className="w-full rounded-md" src={chat?.attachment} alt="image" />}
+                    {chat?.attachment && <img className="w-full rounded-md" src={chat?.attachment} alt={chat?.name} />}
                     <p className="text-right text-[#292929] pt-1">{chat?.text}</p>
 
                 </div>
@@ -92,7 +92,7 @@ const Chat = ({ user }) => {
         e.preventDefault();
         if (image) return sendPicture()
         if (message) saveOnFirebase()
-        // handleFocus()
+        handleFocus()
     }
 
     const saveOnFirebase = (attachment = null) => {
