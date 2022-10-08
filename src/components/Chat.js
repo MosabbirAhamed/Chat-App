@@ -41,6 +41,7 @@ const Chat = ({ user }) => {
     }
 
 
+
     useEffect(() => {
         const unsub = db.collection("chats")
             .orderBy("timestamp", "desc")
